@@ -1,0 +1,172 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "Untitled0.ipynb",
+      "provenance": [],
+      "collapsed_sections": [],
+      "authorship_tag": "ABX9TyPcEU45Zl9+SFpGGTBSrnFC",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/rajeshmath/BigDataAnalytics/blob/master/math_rajesh_assignment3\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "!pip install --ignore-installed -q pyspark==3.2.1"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "qdtDZp8Viao1",
+        "outputId": "ab5da7b5-70b2-4995-ca1e-30147fd760f1"
+      },
+      "execution_count": 2,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "\u001b[K     |████████████████████████████████| 281.4 MB 34 kB/s \n",
+            "\u001b[K     |████████████████████████████████| 198 kB 54.9 MB/s \n",
+            "\u001b[?25h  Building wheel for pyspark (setup.py) ... \u001b[?25l\u001b[?25hdone\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Upload the data\n",
+        "# At this point you have to upload your data to google colab\n",
+        "! wget -q https://storage.googleapis.com/cs777_spring_2022_public/taxi-data-sorted-verysmall.csv"
+      ],
+      "metadata": {
+        "id": "egQTFhOWjAR0"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 6,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 253
+        },
+        "id": "9YulJWjiiRla",
+        "outputId": "f0c04cde-aba3-4b69-d3d3-955ca47f97db"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "Usage: main_task1 <file> <output> \n"
+          ]
+        },
+        {
+          "output_type": "error",
+          "ename": "NameError",
+          "evalue": "ignored",
+          "traceback": [
+            "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+            "\u001b[0;31mNameError\u001b[0m                                 Traceback (most recent call last)",
+            "\u001b[0;32m<ipython-input-6-6a18f5215233>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m()\u001b[0m\n\u001b[1;32m     46\u001b[0m \u001b[0;31m# You have 1 files\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     47\u001b[0m \u001b[0mtestFile\u001b[0m\u001b[0;34m=\u001b[0m \u001b[0mpath\u001b[0m \u001b[0;34m+\u001b[0m \u001b[0;34m\"taxi-data-sorted-verysmall.csv\"\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 48\u001b[0;31m \u001b[0mtestDataFrame\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0msqlContext\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mread\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mformat\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'csv'\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0moptions\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mheader\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m'true'\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0minferSchema\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m'true'\u001b[0m\u001b[0;34m,\u001b[0m  \u001b[0msep\u001b[0m \u001b[0;34m=\u001b[0m\u001b[0;34m\",\"\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mload\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mtestFile\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     49\u001b[0m \u001b[0mtestDataFrame\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mshow\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     50\u001b[0m \u001b[0msc\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mSparkContext\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mappName\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m\"Assignment3\"\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;31mNameError\u001b[0m: name 'sqlContext' is not defined"
+          ]
+        }
+      ],
+      "source": [
+        "from __future__ import print_function\n",
+        "\n",
+        "import os\n",
+        "import sys\n",
+        "import requests\n",
+        "from operator import add\n",
+        "\n",
+        "from pyspark import SparkConf,SparkContext\n",
+        "from pyspark.streaming import StreamingContext\n",
+        "\n",
+        "from pyspark.sql import SparkSession\n",
+        "from pyspark.sql import SQLContext\n",
+        "\n",
+        "from pyspark.sql.types import *\n",
+        "from pyspark.sql import functions as func\n",
+        "from pyspark.sql.functions import *\n",
+        "\n",
+        "\n",
+        "#Exception Handling and removing wrong datalines\n",
+        "def isfloat(value):\n",
+        "    try:\n",
+        "        float(value)\n",
+        "        return True\n",
+        " \n",
+        "    except:\n",
+        "         return False\n",
+        "\n",
+        "#Function - Cleaning\n",
+        "#For example, remove lines if they don’t have 16 values and \n",
+        "# checking if the trip distance and fare amount is a float number\n",
+        "# checking if the trip duration is more than a minute, trip distance is more than 0.1 miles, \n",
+        "# fare amount and total amount are more than 0.1 dollars\n",
+        "def correctRows(p):\n",
+        "    if(len(p)==17):\n",
+        "        if(isfloat(p[5]) and isfloat(p[11])):\n",
+        "            if(float(p[4])> 60 and float(p[5])>0 and float(p[11])> 0 and float(p[16])> 0):\n",
+        "                return p\n",
+        "\n",
+        "#Main\n",
+        "if __name__ == \"__main__\":\n",
+        "    if len(sys.argv) != 1:\n",
+        "        print(\"Usage: main_task1 <file> <output> \", file=sys.stderr)\n",
+        "        exit(-1)\n",
+        "# Set your file path here \n",
+        "path=\"file:///content/\"\n",
+        "# You have 1 files \n",
+        "testFile= path + \"taxi-data-sorted-verysmall.csv\"\n",
+        "testDataFrame = sqlContext.read.format('csv').options(header='true', inferSchema='true',  sep =\",\").load(testFile)\n",
+        "testDataFrame.show()\n",
+        "sc = SparkContext(appName=\"Assignment3\")\n",
+        "rdd = sc.textFile()\n",
+        "#Task 1\n",
+        "#Your code goes here\n",
+        "# Results_1 should have m and b parameters from the calculations\n",
+        "results_1.coalesce(1).saveAsTextFile(sys.argv[2])\n",
+        "#Task 2\n",
+        "#Your code goes here\n",
+        "# print the cost, intercept, and the slope for each iteration\n",
+        "# Results_2 should have m and b parameters from the gradient Descent Calculations\n",
+        "#results_2.coalesce(1).saveAsTextFile(sys.argv[3])\n",
+        "#Task 3 \n",
+        "#Your code goes here\n",
+        "# print the cost, intercept, the slopes (m1,m2,m3,m4), and learning rate for each iteration\n",
+        "# Results_3 should have b, m1, m2, m3, and m4 parameters from the gradient Descent Calculations\n",
+        "#results_3.coalesce(1).saveAsTextFile(sys.argv[4])\n",
+        "sc.stop()\n",
+        "\n",
+        "    "
+      ]
+    }
+  ]
+}
